@@ -41,3 +41,51 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+class MyChallenge extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        backgroundColor: Colors.teal,
+        body: SafeArea(
+          child: Container(
+            padding: EdgeInsets.all(10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Container(
+                  color: Colors.red,
+                  width: 100.0,
+                ),
+                Container(
+                  width: 100.0,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 100.0,
+                        height: 100.0,
+                        color: Colors.yellow,
+                      ),
+                      Container(
+                        width: 100.0,
+                        height: 100.0,
+                        color: Colors.green,
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  color: Colors.blue,
+                  width: 100.0,
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
