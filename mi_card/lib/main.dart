@@ -11,6 +11,45 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         backgroundColor: Colors.teal,
         body: SafeArea(
+          child: Column(
+            children: [
+              CircleAvatar(
+                radius: 50.0,
+                backgroundColor: Colors.red,
+                backgroundImage: AssetImage('images/avatar.jpg'),
+              ),
+              Text(
+                'Trong Hieu',
+                style: TextStyle(
+                    letterSpacing: 1,
+                    fontSize: 25.0,
+                    fontFamily: 'Pacifico',
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+              ),
+              Text(
+                'WEB DEVELOPER',
+                style: TextStyle(
+                    color: Colors.teal.shade100,
+                    letterSpacing: 2.5,
+                    fontSize: 13.0,
+                    fontWeight: FontWeight.bold),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class Example extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        backgroundColor: Colors.teal,
+        body: SafeArea(
             child: Container(
           padding: EdgeInsets.all(10.0),
           child: Column(
