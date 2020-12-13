@@ -33,6 +33,8 @@ class _QuizzPageState extends State<QuizzPage> {
     'A slug\'s blood is green.'
   ];
 
+  List<bool> answers = [false, true, true];
+
   int questionNumber = 0;
 
   @override
@@ -47,7 +49,9 @@ class _QuizzPageState extends State<QuizzPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                questions[questionNumber],
+                questionNumber < questions.length
+                    ? questions[questionNumber]
+                    : 'Finish',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -71,8 +75,21 @@ class _QuizzPageState extends State<QuizzPage> {
                 ),
               ),
               onPressed: () {
+                if (questionNumber == questions.length) return;
+                Icon icon = Icon(
+                  Icons.check,
+                  color: Colors.green,
+                );
+
+                if (answers[questionNumber] == false)
+                  icon = Icon(
+                    Icons.close,
+                    color: Colors.red,
+                  );
+
                 setState(() {
-                  if (questionNumber < questions.length - 1) questionNumber++;
+                  scoreKeeper.add(icon);
+                  questionNumber++;
                 });
               },
             ),
@@ -91,8 +108,22 @@ class _QuizzPageState extends State<QuizzPage> {
                 ),
               ),
               onPressed: () {
+                if (questionNumber == questions.length) return;
+
+                Icon icon = Icon(
+                  Icons.close,
+                  color: Colors.red,
+                );
+
+                if (answers[questionNumber] == true)
+                  icon = Icon(
+                    Icons.check,
+                    color: Colors.green,
+                  );
+
                 setState(() {
-                  if (questionNumber < questions.length - 1) questionNumber++;
+                  scoreKeeper.add(icon);
+                  questionNumber++;
                 });
               },
             ),
