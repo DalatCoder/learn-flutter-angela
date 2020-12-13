@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'icon_content.dart';
+import 'rounded_card.dart';
 
 const bottomContainerHeight = 50.0;
 const bottomContainerBackgroundColor = Color(0xFFEB1555);
@@ -21,17 +25,33 @@ class _InputPageState extends State<InputPage> {
           Expanded(
             child: Row(
               children: [
-                Expanded(child: Card(colour: activeCardColour)),
-                Expanded(child: Card(colour: activeCardColour)),
+                Expanded(
+                  child: RoundedCard(
+                    colour: activeCardColour,
+                    cardChild: IconContent(
+                      icon: FontAwesomeIcons.mars,
+                      label: 'MALE',
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: RoundedCard(
+                    colour: activeCardColour,
+                    cardChild: IconContent(
+                      icon: FontAwesomeIcons.venus,
+                      label: 'FEMALE',
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
-          Expanded(child: Card(colour: activeCardColour)),
+          Expanded(child: RoundedCard(colour: activeCardColour)),
           Expanded(
             child: Row(
               children: [
-                Expanded(child: Card(colour: activeCardColour)),
-                Expanded(child: Card(colour: activeCardColour)),
+                Expanded(child: RoundedCard(colour: activeCardColour)),
+                Expanded(child: RoundedCard(colour: activeCardColour)),
               ],
             ),
           ),
@@ -42,23 +62,6 @@ class _InputPageState extends State<InputPage> {
             height: bottomContainerHeight,
           )
         ],
-      ),
-    );
-  }
-}
-
-class Card extends StatelessWidget {
-  final Color colour;
-
-  Card({@required this.colour});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(13.0),
-      decoration: BoxDecoration(
-        color: colour,
-        borderRadius: BorderRadius.circular(10.0),
       ),
     );
   }
