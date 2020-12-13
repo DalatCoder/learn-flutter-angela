@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizzler/question.dart';
 
 void main() => runApp(Quizzler());
 
@@ -26,16 +27,15 @@ class QuizzPage extends StatefulWidget {
 
 class _QuizzPageState extends State<QuizzPage> {
   List<Icon> scoreKeeper = [];
-
-  List<String> questions = [
-    'You can lead a cow down stairs but not up stairs.',
-    'Approximately one quarter of human bones are in the feet.',
-    'A slug\'s blood is green.'
-  ];
-
-  List<bool> answers = [false, true, true];
-
   int questionNumber = 0;
+
+  List<Question> questions = [
+    Question(q: 'You can lead a cow down stairs but not up stairs.', a: false),
+    Question(
+        q: 'Approximately one quarter of human bones are in the feet.',
+        a: true),
+    Question(q: 'A slug\'s blood is green.', a: true)
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class _QuizzPageState extends State<QuizzPage> {
             child: Center(
               child: Text(
                 questionNumber < questions.length
-                    ? questions[questionNumber]
+                    ? questions[questionNumber].questionText
                     : 'Finish',
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -81,7 +81,7 @@ class _QuizzPageState extends State<QuizzPage> {
                   color: Colors.green,
                 );
 
-                if (answers[questionNumber] == false)
+                if (questions[questionNumber].questionAnswer == false)
                   icon = Icon(
                     Icons.close,
                     color: Colors.red,
@@ -111,14 +111,14 @@ class _QuizzPageState extends State<QuizzPage> {
                 if (questionNumber == questions.length) return;
 
                 Icon icon = Icon(
-                  Icons.close,
-                  color: Colors.red,
+                  Icons.check,
+                  color: Colors.green,
                 );
 
-                if (answers[questionNumber] == true)
+                if (questions[questionNumber].questionAnswer == true)
                   icon = Icon(
-                    Icons.check,
-                    color: Colors.green,
+                    Icons.close,
+                    color: Colors.red,
                   );
 
                 setState(() {
