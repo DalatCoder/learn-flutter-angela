@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'constants.dart';
+import '../constants.dart';
 
 const gapHeight = 8.0;
 const iconSize = 60.0;
