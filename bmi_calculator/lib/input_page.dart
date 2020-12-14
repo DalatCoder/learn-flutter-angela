@@ -31,39 +31,35 @@ class _InputPageState extends State<InputPage> {
             child: Row(
               children: [
                 Expanded(
-                  child: GestureDetector(
-                    onTap: () {
+                  child: RoundedCard(
+                    colour: selectedGender == Gender.Male
+                        ? activeCardColour
+                        : inactiveCardColour,
+                    cardChild: IconContent(
+                      icon: FontAwesomeIcons.mars,
+                      label: 'MALE',
+                    ),
+                    onCardTap: () {
                       setState(() {
                         selectedGender = Gender.Male;
                       });
                     },
-                    child: RoundedCard(
-                      colour: selectedGender == Gender.Male
-                          ? activeCardColour
-                          : inactiveCardColour,
-                      cardChild: IconContent(
-                        icon: FontAwesomeIcons.mars,
-                        label: 'MALE',
-                      ),
-                    ),
                   ),
                 ),
                 Expanded(
-                  child: GestureDetector(
-                    onTap: () {
+                  child: RoundedCard(
+                    colour: selectedGender == Gender.Female
+                        ? activeCardColour
+                        : inactiveCardColour,
+                    cardChild: IconContent(
+                      icon: FontAwesomeIcons.venus,
+                      label: 'FEMALE',
+                    ),
+                    onCardTap: () {
                       setState(() {
                         selectedGender = Gender.Female;
                       });
                     },
-                    child: RoundedCard(
-                      colour: selectedGender == Gender.Female
-                          ? activeCardColour
-                          : inactiveCardColour,
-                      cardChild: IconContent(
-                        icon: FontAwesomeIcons.venus,
-                        label: 'FEMALE',
-                      ),
-                    ),
                   ),
                 ),
               ],
