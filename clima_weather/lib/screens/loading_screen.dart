@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 
 const apiKey = '2fd5b8798feb79a6c02ffdcb95b8e867';
 const apiURL = 'http://api.openweathermap.org/data/2.5/weather';
+const unit = 'metric';
 
 class LoadingScreen extends StatefulWidget {
   @override
@@ -16,9 +17,6 @@ class LoadingScreen extends StatefulWidget {
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
-  double latitude;
-  double longitude;
-
   @override
   void initState() {
     super.initState();
@@ -28,21 +26,17 @@ class _LoadingScreenState extends State<LoadingScreen> {
   void getLocationData() async {
     Location location = Location();
     await location.getCurrentLocation();
-    latitude = location.latitude;
-    longitude = location.longitude;
+    double latitude = location.latitude;
+    double longitude = location.longitude;
 
-    NetworkHelper networkHelper =
-        NetworkHelper('$apiURL?lat=$latitude&lon=$longitude&appid=$apiKey');
+    NetworkHelper networkHelper = NetworkHelper(
+        '$apiURL?lat=$latitude&lon=$longitude&appid=$apiKey&units=$unit');
 
-    var weatherData = networkHelper.getData();
+    var weatherData = await networkHelper.getData();
 
     Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return LocationScreen();
+      return LocationScreen(locationWeather: weatherData);
     }));
-
-    //       int condition = decodedData['weather'][0]['id'];
-    // double temperature = decodedData['main']['temp'];
-    // String cityName = decodedData['name'];
   }
 
   @override
