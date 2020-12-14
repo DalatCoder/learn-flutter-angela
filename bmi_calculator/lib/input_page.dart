@@ -9,37 +9,15 @@ const bottomContainerBackgroundColor = Color(0xFFEB1555);
 const activeCardColour = Color(0xFF1D1E33);
 const inactiveCardColour = Color(0xFF111328);
 
+enum Gender { Male, Female }
+
 class InputPage extends StatefulWidget {
   @override
   _InputPageState createState() => _InputPageState();
 }
 
 class _InputPageState extends State<InputPage> {
-  Color maleCardColor = inactiveCardColour;
-  Color femaleCardColor = inactiveCardColour;
-
-  // 1: male, 2: female
-  void updateColor(int gender) {
-    if (gender == 1) {
-      if (maleCardColor == inactiveCardColour) {
-        maleCardColor = activeCardColour;
-        femaleCardColor = inactiveCardColour;
-      } else {
-        maleCardColor = inactiveCardColour;
-        femaleCardColor = activeCardColour;
-      }
-    }
-
-    if (gender == 2) {
-      if (femaleCardColor == inactiveCardColour) {
-        femaleCardColor = activeCardColour;
-        maleCardColor = inactiveCardColour;
-      } else {
-        femaleCardColor = inactiveCardColour;
-        maleCardColor = activeCardColour;
-      }
-    }
-  }
+  Gender selectedGender;
 
   @override
   Widget build(BuildContext context) {
@@ -56,11 +34,13 @@ class _InputPageState extends State<InputPage> {
                   child: GestureDetector(
                     onTap: () {
                       setState(() {
-                        updateColor(1);
+                        selectedGender = Gender.Male;
                       });
                     },
                     child: RoundedCard(
-                      colour: maleCardColor,
+                      colour: selectedGender == Gender.Male
+                          ? activeCardColour
+                          : inactiveCardColour,
                       cardChild: IconContent(
                         icon: FontAwesomeIcons.mars,
                         label: 'MALE',
@@ -72,11 +52,13 @@ class _InputPageState extends State<InputPage> {
                   child: GestureDetector(
                     onTap: () {
                       setState(() {
-                        updateColor(2);
+                        selectedGender = Gender.Female;
                       });
                     },
                     child: RoundedCard(
-                      colour: femaleCardColor,
+                      colour: selectedGender == Gender.Female
+                          ? activeCardColour
+                          : inactiveCardColour,
                       cardChild: IconContent(
                         icon: FontAwesomeIcons.venus,
                         label: 'FEMALE',
