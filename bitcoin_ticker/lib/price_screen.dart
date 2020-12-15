@@ -1,3 +1,4 @@
+import 'package:bitcoin_ticker/network_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:io' show Platform;
@@ -46,15 +47,36 @@ class _PriceScreenState extends State<PriceScreen> {
   }
 
   Widget selectedMenu;
+  String currentCoinType;
+  String currentCurrency;
+  NetworkHelper networkHelper;
+
+  double bitcoinExchangeRate = 0;
+
+  void updateUI() async {
+    var rate =
+        await networkHelper.getExchangeRate(currentCoinType, currentCurrency);
+
+    print(rate);
+
+    setState(() {
+      bitcoinExchangeRate = rate;
+    });
+  }
 
   @override
   void initState() {
     super.initState();
     selectedMenu = getAndroidDropdownMenu();
+    networkHelper = NetworkHelper();
+    currentCoinType = cryptoList[0];
+    currentCurrency = currenciesList[0];
 
     if (Platform.isIOS) {
       selectedMenu = getiOSPicker();
     }
+
+    updateUI();
   }
 
   @override
@@ -78,7 +100,7 @@ class _PriceScreenState extends State<PriceScreen> {
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
                 child: Text(
-                  '1 BTC = ? USD',
+                  '1 BTC = ${bitcoinExchangeRate.toStringAsFixed(1)} USD',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20.0,
