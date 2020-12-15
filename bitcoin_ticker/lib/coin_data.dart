@@ -36,8 +36,8 @@ String apiKey = '3EA90D9C-86D9-4D3B-8949-8CAB4E14F891';
 String coinAPIURL = 'https://rest.coinapi.io/v1/exchangerate';
 
 class CoinData {
-  Future getCoinData({String currency}) async {
-    String requestURL = '$coinAPIURL/BTC/$currency?apikey=$apiKey';
+  Future getCoinData({String currency, String coinType}) async {
+    String requestURL = '$coinAPIURL/$coinType/$currency?apikey=$apiKey';
     http.Response response = await http.get(requestURL);
 
     if (response.statusCode == 200) {
