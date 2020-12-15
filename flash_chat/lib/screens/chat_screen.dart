@@ -122,9 +122,10 @@ class MessageStream extends StatelessWidget {
           );
         }
 
-        final messages = snapshot.data.docs;
+        final messages = snapshot.data.docs.reversed;
         return Expanded(
           child: ListView(
+              reverse: true,
               padding: EdgeInsets.symmetric(
                 horizontal: 10.0,
                 vertical: 20.0,
