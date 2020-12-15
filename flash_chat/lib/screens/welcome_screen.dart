@@ -1,4 +1,3 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flash_chat/components/rounded_button.dart';
 import 'package:flutter/material.dart';
 
@@ -57,9 +56,9 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                     height: 60,
                   ),
                 ),
-                TypewriterAnimatedTextKit(
-                  text: ['Flash Chat'],
-                  textStyle: TextStyle(
+                Text(
+                  'Flash Chat',
+                  style: TextStyle(
                     fontSize: 45.0,
                     fontWeight: FontWeight.w900,
                   ),
