@@ -1,12 +1,7 @@
-import 'package:bitcoin_ticker/network_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:io' show Platform;
 
-import 'coin_data.dart';
-import 'coin_data.dart';
-import 'coin_data.dart';
-import 'coin_data.dart';
 import 'coin_data.dart';
 
 class PriceScreen extends StatefulWidget {
