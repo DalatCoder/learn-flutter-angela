@@ -6,6 +6,8 @@ import 'dart:io' show Platform;
 import 'coin_data.dart';
 import 'coin_data.dart';
 import 'coin_data.dart';
+import 'coin_data.dart';
+import 'coin_data.dart';
 
 class PriceScreen extends StatefulWidget {
   @override
@@ -50,39 +52,41 @@ class _PriceScreenState extends State<PriceScreen> {
     );
   }
 
-  String bitcoinValue = '?';
-  String ethereumValue = '?';
-  String litecoinValue = '?';
+  Map<String, String> coinValues = {};
+  bool isWaiting = false;
 
   String selectedCurrency = 'USD';
 
   void getData() async {
+    isWaiting = true;
+
     try {
-      CoinData coinData = CoinData();
-
-      double bitcoinData = await coinData.getCoinData(
-          currency: selectedCurrency, coinType: 'BTC');
-
-      double ethereumData = await coinData.getCoinData(
-          currency: selectedCurrency, coinType: 'ETC');
-
-      double litecoinData = await coinData.getCoinData(
-          currency: selectedCurrency, coinType: 'LTC');
+      var data = await CoinData().getCoinData(selectedCurrency);
+      isWaiting = false;
 
       setState(() {
-        bitcoinValue = bitcoinData.toStringAsFixed(0);
-        ethereumValue = ethereumData.toStringAsFixed(0);
-        litecoinValue = litecoinData.toStringAsFixed(0);
+        coinValues = data;
       });
     } catch (e) {
       print(e);
     }
   }
 
+  Column makeCards() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: cryptoList
+          .map((e) => CoinItem(
+              value: isWaiting ? '?' : coinValues[e],
+              currency: selectedCurrency,
+              coinType: e))
+          .toList(),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
-
     getData();
   }
 
@@ -96,21 +100,7 @@ class _PriceScreenState extends State<PriceScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          CoinItem(
-            coinType: 'BTC',
-            value: bitcoinValue,
-            currency: selectedCurrency,
-          ),
-          CoinItem(
-            value: ethereumValue,
-            currency: selectedCurrency,
-            coinType: 'ETC',
-          ),
-          CoinItem(
-            value: litecoinValue,
-            currency: selectedCurrency,
-            coinType: 'LTC',
-          ),
+          makeCards(),
           Container(
             height: 150.0,
             alignment: Alignment.center,
