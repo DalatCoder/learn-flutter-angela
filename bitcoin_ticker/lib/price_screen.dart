@@ -47,36 +47,28 @@ class _PriceScreenState extends State<PriceScreen> {
   }
 
   Widget selectedMenu;
-  String currentCoinType;
-  String currentCurrency;
-  NetworkHelper networkHelper;
+  String bitcoinValueInUSD = '?';
 
-  double bitcoinExchangeRate = 0;
-
-  void updateUI() async {
-    var rate =
-        await networkHelper.getExchangeRate(currentCoinType, currentCurrency);
-
-    print(rate);
-
-    setState(() {
-      bitcoinExchangeRate = rate;
-    });
+  void getData() async {
+    try {
+      double data = await CoinData().getCoinData();
+      setState(() {
+        bitcoinValueInUSD = data.toStringAsFixed(0);
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
   void initState() {
     super.initState();
     selectedMenu = getAndroidDropdownMenu();
-    networkHelper = NetworkHelper();
-    currentCoinType = cryptoList[0];
-    currentCurrency = currenciesList[0];
-
     if (Platform.isIOS) {
       selectedMenu = getiOSPicker();
     }
 
-    updateUI();
+    getData();
   }
 
   @override
@@ -100,7 +92,7 @@ class _PriceScreenState extends State<PriceScreen> {
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
                 child: Text(
-                  '1 BTC = ${bitcoinExchangeRate.toStringAsFixed(1)} USD',
+                  '1 BTC = $bitcoinValueInUSD USD',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20.0,
