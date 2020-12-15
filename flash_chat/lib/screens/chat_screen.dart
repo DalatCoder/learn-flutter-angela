@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flash_chat/constants.dart';
 
 final _firestore = FirebaseFirestore.instance;
+User loggedInUser;
 
 class ChatScreen extends StatefulWidget {
   static const String id = 'chat_screen';
@@ -15,7 +16,6 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final messageTextController = TextEditingController();
   final _auth = FirebaseAuth.instance;
-  User loggedInUser;
   String messageText;
 
   void getCurrentUser() {
@@ -133,6 +133,7 @@ class MessageStream extends StatelessWidget {
                   .map((e) => MessageBubble(
                         text: e['text'],
                         sender: e['sender'],
+                        isMe: e['sender'] == loggedInUser.email,
                       ))
                   .toList()),
         );
@@ -144,15 +145,33 @@ class MessageStream extends StatelessWidget {
 class MessageBubble extends StatelessWidget {
   final String text;
   final String sender;
+  final bool isMe;
 
-  MessageBubble({this.text, this.sender});
+  MessageBubble({this.text, this.sender, this.isMe});
+
+  dynamic getBoderRadius() {
+    if (isMe) {
+      return BorderRadius.only(
+        topLeft: Radius.circular(30.0),
+        bottomLeft: Radius.circular(30.0),
+        bottomRight: Radius.circular(30.0),
+      );
+    }
+
+    return BorderRadius.only(
+      topRight: Radius.circular(30.0),
+      bottomLeft: Radius.circular(30.0),
+      bottomRight: Radius.circular(30.0),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(10.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment:
+            isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
           Text(
             sender,
@@ -162,19 +181,15 @@ class MessageBubble extends StatelessWidget {
             ),
           ),
           Material(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30.0),
-              bottomLeft: Radius.circular(30.0),
-              bottomRight: Radius.circular(30.0),
-            ),
+            borderRadius: getBoderRadius(),
             elevation: 5.0,
-            color: Colors.lightBlueAccent,
+            color: isMe ? Colors.lightBlueAccent : Colors.white,
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
               child: Text(
                 text,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: isMe ? Colors.white : Colors.black,
                   fontSize: 15.0,
                 ),
               ),
