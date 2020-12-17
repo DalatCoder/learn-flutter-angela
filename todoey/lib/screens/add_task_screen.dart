@@ -1,10 +1,9 @@
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:todoey/models/task.dart';
+import 'package:todoey/models/task_data.dart';
 
 class AddTaskScreen extends StatelessWidget {
-  final Function onSubmit;
-
-  AddTaskScreen({this.onSubmit});
-
   @override
   Widget build(BuildContext context) {
     String newTaskTitle;
@@ -40,7 +39,9 @@ class AddTaskScreen extends StatelessWidget {
             ),
             FlatButton(
               onPressed: () {
-                onSubmit(newTaskTitle);
+                Provider.of<TaskData>(context)
+                    .addTask(Task(name: newTaskTitle));
+                Navigator.pop(context);
               },
               child: Text(
                 'Add',
