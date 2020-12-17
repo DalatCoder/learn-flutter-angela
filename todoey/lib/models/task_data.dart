@@ -26,4 +26,9 @@ class TaskData extends ChangeNotifier {
     task.toggleDone();
     notifyListeners();
   }
+
+  void deleteTask(Task task) {
+    _tasks.removeAt(_tasks.indexWhere((element) => element.name == task.name));
+    notifyListeners();
+  }
 }
